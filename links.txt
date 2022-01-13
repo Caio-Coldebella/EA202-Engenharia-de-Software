@@ -1,0 +1,9 @@
+Tutorial sobre Node.js + Express. https://www.tutorialspoint.com/nodejs/
+Tutorial MongoDB http://www.tutorialspoint.com/mongodb/
+Site do MEVN-CLI https://mevn.madlabs.xyz/?ref=madewithvuejs.com
+Site do VUe.js https://br.vuejs.org/
+API do Node.js https://nodejs.org/api/
+API do Express http://expressjs.com/en/api.html
+API do Mongoose https://mongoosejs.com/docs/api.html
+API do Vue.js https://vuejs.org/v2/api/
+Download Docker https://www.docker.com/
