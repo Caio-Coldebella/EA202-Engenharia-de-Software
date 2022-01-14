@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Manipulador de Recursos</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+<head>
+<style>
+table, th, td {
+  border:1px solid black;
+}
+th {
+  background-color: cyan
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<body>
+<div class="container">
+<div id="app">
+  <form @submit.prevent="clear">
+    <h3>Inserção e update de alunos</h3>
+    <br>
+    <div>
+      RA: <input type="text" v-model="repr.ra" size=5>
+      Nome: <input type="text" v-model="repr.nome" size=20>
+      Curso: <input type="text" v-model="repr.curso" size=20>
+      <button v-on:click="doPost()">Insert</button>
+      <button v-on:click="doPut()">Update</button>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <h3>Consulta e deleção de alunos</h3>
+    <div>
+      RA: <input type="text" v-model="auxra" size=5>
+      <button v-on:click="doGet()">Consulta</button>
+      <button v-on:click="doDelete()">Delete</button>
+    </div>
+  </form>
+    <br>
+    <hr>
+    <br>
+    <div class="Resultado">
+        <h3> Resultado </h3>
+        <table>
+        <tr>
+            <th> RA </th>
+            <th> Nome </th>
+            <th> Curso </th>
+        </tr>
+        <tr v-for = "x in payload.alunos">
+            <td>{{x.ra}}</td>
+            <td>{{x.nome}}</td>
+            <td>{{x.curso}}</td>
+        </tr>
+        </table>
+        {{ payload.resultado }}
+    </div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: { 
+         payload: '',
+         codigo: '',
+         recurso: '/alunos',
+         auxra:'',
+         repr: {
+            ra: '', nome: '', curso: ''},
+    },
+    methods: {
+    
+    // GET
+    doGet: async function () {
+       var url = app.recurso;
+       if (app.auxra.length >0){
+         url = "/alunos/" + app.auxra;}
+       var data = app.repr;
+       var request = axios({"method": "get","url": url});
+       try {
+         response = await request
+       } catch (error) {
+         response = {"data": { "resultado": " URL inválida" }, "status": 404, "statusText": "Error"}
+       }
+       if (app.auxra.length >0){
+        app.ra = response.data.alunos[0].ra
+        app.nome = response.data.alunos[0].nome
+        app.curso = response.data.alunos[0].curso
+        } 
+       app.payload = response.data
+       app.codigo = response.status + " "+ response.statusText
+    },
+
+    // POST
+    doPost: async function () {
+       var url = app.recurso;
+       var data = app.repr;
+       var request = axios({
+                   "method": "post",
+                   "url": url,
+                   "headers": { "Content-Type": "application/json" },
+                   "data": data});
+        try {
+         response = await request
+       } catch (error) {
+         response = response = {"data": { "resultado": " URL inválida" }, "status": 404, "statusText": "Error"}
+       }  
+        app.payload = response.data
+        app.codigo = response.status + " "+ response.statusText        
+    },
+  
+    // PUT
+    doPut: async function() {
+       var url = "/alunos/"+app.repr.ra;
+       var data = app.repr;
+       var request = axios({
+                   "method": "put",
+                   "url": url,
+		   "headers": { "Content-Type": "application/json" },		   
+                   "data": data});
+        try {
+        response = await request
+       } catch (error) {
+         response = {"data": { "resultado": " URL inválida" }, "status": 404, "statusText": "Error"}
+       }  
+        app.payload = response.data
+        app.codigo = response.status + " "+ response.statusText
+    },
+  
+    // DELETE
+    doDelete: async function() {
+       var url = "/alunos/" + app.auxra;
+       var request = axios({
+                   "method": "delete",
+                   "url": url});
+        try {
+        response = await request
+       } catch (error) {
+         response = {"data": { "resultado": " URL inválida" }, "status": 404, "statusText": "Error"}
+       }
+        app.auxra = ''  
+        app.payload = response.data
+        app.codigo = response.status + " "+ response.statusText            
+     },
+
+    }
+   }
+  )
+  </script> 
+</body>
+</html>

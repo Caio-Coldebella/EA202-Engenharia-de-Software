@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<style type="text/css">
+    .tg {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    
+    .tg td {
+        border-color: black;
+        border-style: solid;
+        border-width: 1px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        overflow: hidden;
+        padding: 10px 5px;
+        word-break: normal;
+    }
+    
+    .tg th {
+        border-color: black;
+        border-style: solid;
+        border-width: 1px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: normal;
+        overflow: hidden;
+        padding: 10px 5px;
+        word-break: normal;
+    }
+    
+    .tg .tg-baqh {
+        text-align: center;
+        vertical-align: top
+    }
+    
+    .tg .tg-ahzk {
+        background-color: #6665cd;
+        color: #f8ff00;
+        text-align: center;
+        vertical-align: top
+    }
+</style>
+
+<body>
+
+    <h1>Cadastro de Alunos</h1>
+
+    <br>
+
+    <div id="app">
+        <form @submit.prevent="clear">
+            <button v-on:click="acessa()">USUARIOS CADASTRADOS</button>&nbsp;&nbsp;
+            <br><br> Senha nova: <input type="text" v-model="pass"><br><br>
+        </form>
+        <br><br>
+        <b>Resultado:</b> {{ mensagem }}
+
+
+        <table class="tg">
+            <thead v-if="usuarios.length > 0">
+                <tr>
+                    <th class="tg-ahzk"> Nome </th>
+                    <th class="tg-ahzk"> Permissao </th>
+                </tr>
+            </thead>
+            <tbody v-if="usuarios.length > 0">
+                <tr v-for="usuario in usuarios">
+                    <td class="tg-baqh"> {{ usuario.name }} </td>
+                    <td class="tg-baqh"> {{ usuario.permission }} </td>
+                    <td class="tg-baqh"><button v-on:click="atualiza(usuario.name)">ATUALIZA</button> &nbsp;
+                        <button v-on:click="remo(usuario.name)">REMOVE</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script type="text/x-template" id="tabletemplate">
+        <tr>
+            <td class="tg-baqh"> {{ name }} </td>
+            <td class="tg-baqh"> {{ permission }} </td>
+            <td class="tg-baqh"> </td>
+        </tr>
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                payload: '',
+                codigo: '',
+                recurso: '/usuarios',
+                mensagem: '',
+                hname: '',
+                hpass: '',
+                hpermission: '',
+                usuarios: '',
+                name: '',
+                pass: '',
+                permission: ''
+            },
+            methods: {
+
+                // ACESSA
+                acessa: async function() {
+                    var url = "/usuarios";
+                    var request = axios({
+                        "method": "get",
+                        "url": url
+                    });
+                    try {
+                        response = await request
+                        if (response.usuarios != null) {
+                            app.hname = "Name";
+                            app.hpass = "Pass";
+                            app.hpermission = "Permission";
+                            app.mensagem = response;
+                            app.usuarios = response.data.usuarios;
+                        } else {
+                            //app.clear();
+                            app.mensagem = response.data.resultado;
+                            app.payload = response;
+                            app.usuarios = response.data.usuarios;
+                            //app.mensagem = response;
+                        }
+                    } catch (error) {
+                        app.mensagem = "Usuário não autenticado - Faça login primeiro"
+                    }
+                },
+
+                // ATUALIZA
+                atualiza: async function(name) {
+                    if (app.pass == undefined || app.pass.length == 0) {
+                        app.mensagem = "Preencha o campo Senha";
+                        return;
+                    }
+                    if (app.name == undefined || app.name.length == 0) a_name = name;
+                    else a_name = app.name;
+                    var data = {
+                        "name": name,
+                        "pass": app.pass,
+                        "permission": app.permission
+                    };
+                    var request = axios({
+                        "method": "put",
+                        "url": "/usuarios",
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": data
+                    });
+                    try {
+                        response = await request
+                        app.mensagem = response.data.resultado;
+                    } catch (error) {
+                        app.mensagem = "O usuário autenticado não está autorizado a fazer modificações";
+                    }
+                },
+
+                // REMOVE
+                remo: async function(name) {
+                    var data = {
+                        "name": name,
+                        "pass": app.pass,
+                        "permission": app.permission
+                    };
+                    var request = axios({
+                        "method": "delete",
+                        "url": "/usuarios",
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": data
+                    });
+                    try {
+                        response = await request
+                        app.mensagem = response.data.resultado;
+                        app.payload = response;
+                    } catch (error) {
+                        app.mensagem = "O usuário autenticado não está autorizado a fazer modificações";
+                    }
+                },
+            }
+        })
+    </script>
+
+</body>
+
+</html>

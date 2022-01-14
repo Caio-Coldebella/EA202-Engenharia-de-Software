@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+    <title>Entregável 3</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="30">
+    <meta name="author" content="Caio Ruiz Coldebella RA:232621">
+    <meta name="keywords" content="Gitlab, EA202, Delivery 3, CSS, HTML, JavaScript, FEEC, UNICAMP, Tutoriais">
+    <script src="JS/main.js"></script>
+    <link rel="stylesheet" href="CSS/main.css">    
+    </head>
+
+    <body>
+
+    <header> 
+    <a href="https://www.fee.unicamp.br/" target="_blank" title="Acesse o site da FEEC"> <img src="IMG/logo_feec.png" alt="FEEC" style="float:left;width:100px;height:70px;padding-left:170px;"> </a>
+    <a href="https://gitlab.unicamp.br/ea202-2021" target="_blank" title="Acesse a página do Gitlab da disciplina"> 
+        <img src="IMG/gitlab.png" alt="GITLAB" style="float:right;width:60px;height:60px;padding-right:170px">        
+        <img src="IMG/logounicamp.png" alt="UNICAMP" style="float:right;width:60px;height:60px;"> </a>
+    <h1>Engenharia de Software <br> EA202</h1>
+    </header>
+
+    <aside>
+            <p>Menu</p>
+        <div class="estilo_aside">            
+            <a href="" onClick="window.location.reload();" title="Recarrega a página">HOME</a><br>
+            <a href="https://moodle.ggte.unicamp.br/" target="_blank" title="Acesse a página inicial do Moodle Unicamp">Moodle</a>
+        <div class="estilo_aside">            
+            <p>Tutoriais</p>
+        <div class="estilo_aside">            
+            <a href="https://www.w3schools.com/html/default.asp" target="_blank" title="Acesse o tutorial de HTML">HTML</a><br> 
+            <a href="https://www.w3schools.com/css/default.asp" target="_blank" title="Acesse o tutorial de CSS">CSS</a><br>
+            <a href="https://www.w3schools.com/js/default.asp" target="_blank" title= "Acesse o tutorial de JavaScript">JS</a>  
+        <div class="estilo_aside">
+        </div>
+    </aside>
+    <section>
+        <p id="relogio" style="float:right;padding-right: 8%"></p>
+        <script>
+        document.getElementById("relogio").innerHTML = Date();
+        </script>         
+        <h1>Entregável 3:</h1>
+        <h2>Formulário Teste</h2>
+        <form name="forml" onsubmit="return resposta()" required>
+            <label for="nome">Nome*:</label>
+            <input type="text" id="nome" name="nome" value="" onkeyup="this.value = this.value.toUpperCase();">
+            <label for="ra">RA*:</label>
+            <input type="number" id="ra" name="ra" value="" maxlength="6" pattern="[0-9]*" onkeydown="return funcra(this)" required> <br>
+            <label for="datanasc">Data de Nascimento*:</label>
+            <input type="date" id="datanasc" name="datanasc" value="">
+            <label for="naturalidade">Naturalidade*:</label>
+            <input type="text" id="naturalidade" name="naturalidade" value="" onkeyup="this.value = this.value.toUpperCase();"><br>
+            <label for="uni">Universidade*:</label>
+            <select id="uni" name="uni">
+                <option value=""></option>
+                <option value="UNICAMP">UNICAMP</option>
+                <option value="PUCCAMP">PUCAMP</option>
+                <option value="USP">USP</option>
+                <option value="UFSCAR">UFSCAR</option>
+                <option value="UNIR">UNIR</option>
+            </select><br>
+            <label for="curso">Curso*:</label>
+            <select id="curso" name="curso">
+                <option value=""></option>
+                <option value="Engcomp">Egenharia de Computação</option>
+                <option value="Engmec">Egenharia Mecânica</option>
+                <option value="Engalim">Egenharia de Alimentos</option>
+                <option value="Nutri">Nutrição</option>
+                <option value="fisica">Física</option>
+                <option value="mass">Massoterapia</option>
+                <option value="astr">Astrologia</option>
+            </select>
+            <label for="semestre">Semestre*:</label>
+            <select id="semestre" name="semestre">
+                <option value=""></option>
+                <option value="1">Primeiro</option>
+                <option value="2">Segundo</option>
+                <option value="3">Terceiro</option>
+                <option value="4">Quarto</option>
+                <option value="5">Quinto</option>
+                <option value="6">Sexto</option>
+                <option value="7">Sétimo</option>
+                <option value="8">Oitavo</option>
+                <option value="9">Nono</option>
+                <option value="10">Décimo</option>
+                <option value="11">Décimo Primeiro</option>
+                <option value="12">Décimo Segundo</option>
+            </select>
+        <br>
+        <div class="botao">            
+            <input type="submit" value="Submit">
+        </div>
+        </form>
+    </section>
+
+    <footer>
+        <hr size="2mm" color="blue">
+        <p style="text-align: center;">
+        Faculdade de Engenharia Elétrica e de Computação<br>
+        UNICAMP - Universidade Estadual de Campinas<br>
+        Av. Albert Einstein 400.<br> 
+        13.083-852 Campinas - SP, Brazil</p>
+        <div class="imagem">
+        <img src="IMG/logounicamp.png" alt="UNICAMP" style="height: 80px; width: 80px;">
+        </div>
+    </footer>
+
+    </body>
+</html>

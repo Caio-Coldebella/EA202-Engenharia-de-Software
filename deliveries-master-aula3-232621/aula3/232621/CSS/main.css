@@ -1,0 +1,49 @@
+header{
+    height:80px;
+    background-color:gray;
+    text-align: center;
+    border: 2px solid black;
+    font-size: 80%
+}
+aside{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right:20px;
+    background-color: gray;
+    border: 2px solid black;
+    float: left;
+    width: 8%;
+    line-height: 1.6;
+}
+a:link{
+    color: #000080;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+a:visited{
+    color: #FF0000;
+}
+.estilo_aside a{
+    display:block;
+}
+form{
+    font-family: Calibri;
+    font-size: 16;
+    font-weight: bold;
+    line-height: 4;
+}
+.botao{
+    margin-left: 47%;
+}
+.imagem{
+  position: fixed;
+  bottom: 10%;
+  right: 30%;
+}
+footer{
+    clear: left;
+}   
+
